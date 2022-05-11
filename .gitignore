@@ -1,2 +1,2 @@
 /si_venv
-/course_files
+*.ipynb_checkpoints
