@@ -36,7 +36,6 @@ class LineGraph :
         """Refresh the graph display"""
         clear_output(wait=True)
         plt.plot(self.data_t, self.data_x)
-        self._addLegend()
         plt.show()
 
     def _addLegend(self):
