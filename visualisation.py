@@ -21,7 +21,7 @@ class LineGraph :
 
         self.refreshDisplay()
 
-    def addPoint(self,t,x,refresh=true) :
+    def addPoint(self,t,x,refresh=True) :
         self.data_t.append(t)
         self.data_x.append(x)
         if refresh :
