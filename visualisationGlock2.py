@@ -101,7 +101,7 @@ class MultipleLineGraph :
         plt.title(self.title)
         plt.legend()
 
-if __name__ == "__main__" :
+"""if __name__ == "__main__" :
     test = MultipleLineGraph(['item1','item2'],"items")
     test.addPoint(t=1,X=[2,3])
-    test.addPoint(t=2,X=[6,7])
+    test.addPoint(t=2,X=[6,7])"""
