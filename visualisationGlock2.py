@@ -10,13 +10,15 @@ class LineGraph :
     y_legend:str
     title:str
 
-    def __init__(self,title:str="sample title",x_legend:str="",y_legend:str="") -> None:
+    def __init__(self,title:str="sample title",x_legend:str="",y_legend:str="",ax=None) -> None:
         self.data_t = []
         self.data_x = []
 
         self.title = title
         self.x_legend = x_legend
         self.y_legend = y_legend
+
+        self.ax = ax
 
         self.refreshDisplay()
 
@@ -28,22 +30,30 @@ class LineGraph :
         """
         self.data_t.append(t)
         self.data_x.append(x)
-        if refresh :
+        if refresh and self.ax==None :
             self.refreshDisplay()
 
 
     def refreshDisplay(self) :
         """Refresh the graph display"""
-        clear_output(wait=True)
-        plt.plot(self.data_t, self.data_x)
-        plt.show()
+        if self.ax==None :
+            clear_output(wait=True)
+            self._addLegend()
+            plt.plot(self.data_t, self.data_x)
+            plt.show()
+        else :
+            self._addLegend()
+            self.ax.plot(self.data_t, self.data_x)
 
     def _addLegend(self):
         """Automatically add a legend"""
-        plt.xlabel(self.x_legend)
-        plt.ylabel(self.y_legend)
-        plt.title(self.title)
-        plt.legend()
+        if self.ax==None :
+            plt.xlabel(self.x_legend)
+            plt.ylabel(self.y_legend)
+            plt.title(self.title)
+            plt.legend()
+        else :
+            self.ax.set(xlabel=self.x_legend,ylabel=self.y_legend,title=self.title)
 
 class MultipleLineGraph :
 
@@ -56,7 +66,7 @@ class MultipleLineGraph :
     title:str
     lines_title:list[str]
 
-    def __init__(self,lines_title:list[str],title:str="sample title",x_legend:str="",y_legend:str="") -> None:
+    def __init__(self,lines_title:list[str],title:str="sample title",x_legend:str="",y_legend:str="",ax=None) -> None:
         """Initialise a LineGraph with lines"""
 
         self.dimension = len(lines_title)
@@ -68,9 +78,12 @@ class MultipleLineGraph :
         self.x_legend = x_legend
         self.y_legend = y_legend
 
+        self.ax = ax
+
         self.lines_title = lines_title
 
-        self.refreshDisplay()
+        if ax==None :
+            self.refreshDisplay()
 
     def addPoint(self,t:float,X:list,refresh:bool=True) :
         """Add a point into the graph display
@@ -82,24 +95,35 @@ class MultipleLineGraph :
         for i,xi in enumerate(self.data_multiple) :
             xi.append(X[i])
         
-        if refresh :
+        if refresh and self.ax==None :
             self.refreshDisplay()
 
 
     def refreshDisplay(self) :
-        clear_output(wait=True)
-        
-        for i,xi in enumerate(self.data_multiple) :
-            plt.plot(self.data_t,xi,label=self.lines_title[i])
+        if self.ax == None :
+            clear_output(wait=True)
+            
+            for i,xi in enumerate(self.data_multiple) :
+                plt.plot(self.data_t,xi,label=self.lines_title[i])
 
-        self._addLegend()
-        plt.show()
+            self._addLegend()
+            plt.show()
+        else :
+            for i,xi in enumerate(self.data_multiple) :
+                self.ax.plot(self.data_t,xi,label=self.lines_title[i])
+
+            self._addLegend()
 
     def _addLegend(self):
-        plt.xlabel(self.x_legend)
-        plt.ylabel(self.y_legend)
-        plt.title(self.title)
-        plt.legend()
+        if self.ax == None :
+            plt.xlabel(self.x_legend)
+            plt.ylabel(self.y_legend)
+            plt.title(self.title)
+            plt.legend()
+        else :
+            self.ax.set(xlabel=self.x_legend,ylabel=self.y_legend,title=self.title)
+
+            
 
 """if __name__ == "__main__" :
     test = MultipleLineGraph(['item1','item2'],"items")
