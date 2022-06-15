@@ -2,6 +2,8 @@
 
 This repository aims to simulate a management company
 
+![plot](./graph.png)
+
 ## Members
 
 - Octave BOËLLE
