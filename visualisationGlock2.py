@@ -33,6 +33,11 @@ class LineGraph :
         if refresh and self.ax==None :
             self.refreshDisplay()
 
+    def addPoints(self,t,x,refresh:bool=True) -> None:
+        self.data_t.extend(t)
+        self.data_x.extend(x)
+        if refresh and self.ax==None :
+            self.refreshDisplay()
 
     def refreshDisplay(self) :
         """Refresh the graph display"""
