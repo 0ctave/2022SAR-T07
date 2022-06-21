@@ -12,8 +12,7 @@ This repository aims to simulate a management company
 
 ## How to launch server
 
-cd course_files/session5
-python -m entersim
+There is no need to launch the server, it is running on https://bloctave.fr
 
 ## Contributing
 
